@@ -1,14 +1,25 @@
-const canvas = document.querySelector("#gameCanvas");
+const byId = id => document.getElementById(id);
+const canvas = byId("gameCanvas");
 const ctx = canvas.getContext("2d");
-const startScreen = document.querySelector("#startScreen");
-const messageScreen = document.querySelector("#messageScreen");
-const scoreEl = document.querySelector("#score");
-const livesEl = document.querySelector("#lives");
-const levelNumberEl = document.querySelector("#levelNumber");
-const levelNameEl = document.querySelector("#levelName");
-const ammoEl = document.querySelector("#ammo");
-const soundButton = document.querySelector("#soundButton");
-const homeButton = document.querySelector("#homeButton");
+const ui = {
+  startScreen: byId("startScreen"),
+  messageScreen: byId("messageScreen"),
+  deathArt: byId("deathArt"),
+  messageEyebrow: byId("messageEyebrow"),
+  messageTitle: byId("messageTitle"),
+  messageText: byId("messageText"),
+  messageButton: byId("messageButton"),
+  score: byId("score"),
+  lives: byId("lives"),
+  levelNumber: byId("levelNumber"),
+  levelName: byId("levelName"),
+  ammo: byId("ammo"),
+  soundButton: byId("soundButton"),
+  homeButton: byId("homeButton"),
+  duckButton: byId("duckButton")
+};
+const levelSteps = document.querySelectorAll(".level-step");
+const levelTracks = document.querySelectorAll(".track");
 
 const W = canvas.width;
 const H = canvas.height;
@@ -23,6 +34,14 @@ const levels = [
   { name: "BISON BLITZ", sky: ["#72c9ed", "#ffe291"], ground: "#c79b47", far: "#d4af61", enemy: "bison", speed: 7.9 },
   { name: "DINO DANGER", sky: ["#f58b62", "#f8d57a"], ground: "#55713c", far: "#476a48", enemy: "trex", speed: 8.3 },
   { name: "STORM STRIKE", sky: ["#30355f", "#7585a5"], ground: "#46516a", far: "#59627e", enemy: "storm", speed: 8.6, length: 24000 }
+];
+const levelIntros = [
+  "",
+  "Silent ninjas ahead. Stay sharp!",
+  "Zombie dragons and knights! You've got this!",
+  "Stampeding bison ahead—jump, duck, and hold on to your shell!",
+  "The T. rexes are loose—and they're hungry! Watch those chomping jaws!",
+  "Lightning from above and tornadoes below—blast the bolts and leap the twisters!"
 ];
 
 let audioCtx;
@@ -46,7 +65,6 @@ let shots = [];
 let ammoBoxes = [];
 let fruits = [];
 let particles = [];
-let clouds = [];
 
 function currentLevelLength() {
   return levels[level].length || LEVEL_LENGTH;
@@ -57,23 +75,40 @@ function resetPlayer() {
 }
 
 function resetGame(startLevel = 0) {
-  level = startLevel; score = 0; lives = MAX_LIVES; ammo = 0; distance = 0; enemies = []; shots = []; ammoBoxes = []; fruits = []; particles = []; spawnTimer = 130; ammoTimer = 210; fruitTimer = 520;
-  resetPlayer(); updateHud(); updateTracker();
+  level = startLevel;
+  score = 0;
+  lives = MAX_LIVES;
+  ammo = 0;
+  distance = 0;
+  enemies = [];
+  shots = [];
+  ammoBoxes = [];
+  fruits = [];
+  particles = [];
+  spawnTimer = 130;
+  ammoTimer = 210;
+  fruitTimer = 520;
+  resetPlayer();
+  updateHud();
+  updateTracker();
 }
 
 function startGame(startLevel = selectedStartLevel) {
   selectedStartLevel = startLevel;
-  initAudio(); resetGame(startLevel); state = "playing";
-  startScreen.classList.add("hidden"); messageScreen.classList.add("hidden");
+  initAudio();
+  resetGame(startLevel);
+  state = "playing";
+  ui.startScreen.classList.add("hidden");
+  ui.messageScreen.classList.add("hidden");
 }
 
 function goHome() {
   selectedStartLevel = 0;
   resetGame(0);
   state = "menu";
-  messageScreen.classList.add("hidden");
-  document.querySelector("#deathArt").classList.add("hidden");
-  startScreen.classList.remove("hidden");
+  ui.messageScreen.classList.add("hidden");
+  ui.deathArt.classList.add("hidden");
+  ui.startScreen.classList.remove("hidden");
 }
 
 function jump() {
@@ -180,15 +215,35 @@ function stompEnemy(enemy) {
   updateHud();
 }
 
+function setMessage({ eyebrow, title, text, button, icon, showDeathArt = false }) {
+  ui.messageEyebrow.textContent = eyebrow;
+  ui.messageTitle.textContent = title;
+  ui.messageText.textContent = text;
+  ui.messageButton.textContent = `${button} `;
+
+  const iconEl = document.createElement("span");
+  iconEl.textContent = icon;
+  ui.messageButton.append(iconEl);
+  ui.deathArt.classList.toggle("hidden", !showDeathArt);
+}
+
 function endGame(won) {
   state = won ? "won" : "gameover";
   player.dead = !won;
-  document.querySelector("#deathArt").classList.toggle("hidden", won);
-  document.querySelector("#messageEyebrow").textContent = won ? "THE COOP IS SAVED!" : "DOUBLE YOLK DISASTER!";
-  document.querySelector("#messageTitle").textContent = won ? "Egg-cellent!" : "YOU GOT YOLKED";
-  document.querySelector("#messageText").textContent = won ? `You scored ${String(score).padStart(5, "0")} points and became a coop legend!` : `You scored ${String(score).padStart(5, "0")} points. The coop still believes in you!`;
-  document.querySelector("#messageButton").innerHTML = won ? "PLAY AGAIN <span>↻</span>" : "TRY AGAIN <span>↻</span>";
-  setTimeout(() => messageScreen.classList.remove("hidden"), 350);
+  const paddedScore = String(score).padStart(5, "0");
+
+  setMessage({
+    eyebrow: won ? "THE COOP IS SAVED!" : "DOUBLE YOLK DISASTER!",
+    title: won ? "Egg-cellent!" : "YOU GOT YOLKED",
+    text: won
+      ? `You scored ${paddedScore} points and became a coop legend!`
+      : `You scored ${paddedScore} points. The coop still believes in you!`,
+    button: won ? "PLAY AGAIN" : "TRY AGAIN",
+    icon: "↻",
+    showDeathArt: !won
+  });
+
+  setTimeout(() => ui.messageScreen.classList.remove("hidden"), 350);
   if (won) { beep(523, .12, "sine", .06); beep(659, .12, "sine", .06, .13); beep(784, .25, "sine", .06, .26); }
 }
 
@@ -197,38 +252,49 @@ function nextLevel() {
   // victory screen, and an out-of-range index would stop the animation loop.
   if (level >= levels.length - 1) { endGame(true); return; }
   level++;
-  state = "transition"; enemies = []; shots = []; ammoBoxes = []; fruits = []; distance = 0; spawnTimer = 120; ammoTimer = 180; fruitTimer = 430; updateHud(); updateTracker();
-  document.querySelector("#messageEyebrow").textContent = `LEVEL ${level + 1}`;
-  document.querySelector("#messageTitle").textContent = levels[level].name;
-  document.querySelector("#messageText").textContent = level === 1
-    ? "Silent ninjas ahead. Stay sharp!"
-    : level === 2
-      ? "Zombie dragons and knights! You've got this!"
-      : level === 3
-        ? "Stampeding bison ahead—jump, duck, and hold on to your shell!"
-        : level === 4
-          ? "The T. rexes are loose—and they're hungry! Watch those chomping jaws!"
-          : "Lightning from above and tornadoes below—blast the bolts and leap the twisters!";
-  document.querySelector("#messageButton").innerHTML = "LET'S GO! <span>▶</span>";
-  document.querySelector("#deathArt").classList.add("hidden");
-  messageScreen.classList.remove("hidden");
+  state = "transition";
+  enemies = [];
+  shots = [];
+  ammoBoxes = [];
+  fruits = [];
+  distance = 0;
+  spawnTimer = 120;
+  ammoTimer = 180;
+  fruitTimer = 430;
+  updateHud();
+  updateTracker();
+
+  setMessage({
+    eyebrow: `LEVEL ${level + 1}`,
+    title: levels[level].name,
+    text: levelIntros[level],
+    button: "LET'S GO!",
+    icon: "▶"
+  });
+  ui.messageScreen.classList.remove("hidden");
 }
 
-function continueLevel() { resetPlayer(); state = "playing"; messageScreen.classList.add("hidden"); }
+function continueLevel() {
+  resetPlayer();
+  state = "playing";
+  ui.messageScreen.classList.add("hidden");
+}
 
 function updateHud() {
-  scoreEl.textContent = String(score).padStart(5, "0");
-  ammoEl.textContent = ammo;
-  livesEl.textContent = "♥ ".repeat(lives).trim() + " ♡ ".repeat(MAX_LIVES - lives).trim();
-  livesEl.setAttribute("aria-label", `${lives} lives`);
-  levelNumberEl.textContent = `LEVEL ${level + 1}`; levelNameEl.textContent = levels[level].name;
+  ui.score.textContent = String(score).padStart(5, "0");
+  ui.ammo.textContent = ammo;
+  ui.lives.textContent = "♥ ".repeat(lives).trim() + " ♡ ".repeat(MAX_LIVES - lives).trim();
+  ui.lives.setAttribute("aria-label", `${lives} lives`);
+  ui.levelNumber.textContent = `LEVEL ${level + 1}`;
+  ui.levelName.textContent = levels[level].name;
 }
 
 function updateTracker() {
-  document.querySelectorAll(".level-step").forEach((step, i) => {
-    step.classList.toggle("active", i === level); step.classList.toggle("done", i < level);
+  levelSteps.forEach((step, i) => {
+    step.classList.toggle("active", i === level);
+    step.classList.toggle("done", i < level);
   });
-  document.querySelectorAll(".track").forEach((track, i) => track.classList.toggle("done", i < level));
+  levelTracks.forEach((track, i) => track.classList.toggle("done", i < level));
 }
 
 function rectsOverlap(a, b, pad = 0) {
@@ -692,31 +758,60 @@ function loop(time) {
   const dt = lastTime ? time - lastTime : 16.67; lastTime = time; update(dt); render(); requestAnimationFrame(loop);
 }
 
-document.querySelector("#startButton").addEventListener("click", () => startGame(0));
+function setDucking(ducking) {
+  if (!ducking || (state === "playing" && player.grounded)) {
+    player.ducking = ducking;
+  }
+}
+
+function toggleSound() {
+  soundOn = !soundOn;
+  ui.soundButton.classList.toggle("muted", !soundOn);
+  ui.soundButton.textContent = soundOn ? "♫" : "×";
+  ui.soundButton.setAttribute("aria-pressed", String(soundOn));
+
+  if (soundOn) {
+    initAudio();
+    beep(440, .06);
+  }
+}
+
+byId("startButton").addEventListener("click", () => startGame(0));
 document.querySelectorAll("[data-start-level]").forEach(button => {
   button.addEventListener("click", () => startGame(Number(button.dataset.startLevel)));
 });
-document.querySelector("#messageButton").addEventListener("click", () => state === "transition" ? continueLevel() : startGame(selectedStartLevel));
-document.querySelector("#jumpButton").addEventListener("pointerdown", e => { e.preventDefault(); jump(); });
-const duckButton = document.querySelector("#duckButton");
-duckButton.addEventListener("pointerdown", e => { e.preventDefault(); if (state === "playing" && player.grounded) player.ducking = true; });
-duckButton.addEventListener("pointerup", () => player.ducking = false);
-duckButton.addEventListener("pointercancel", () => player.ducking = false);
-document.querySelector("#blastButton").addEventListener("pointerdown", e => { e.preventDefault(); blast(); });
-homeButton.addEventListener("click", goHome);
-soundButton.addEventListener("click", () => { soundOn = !soundOn; soundButton.classList.toggle("muted", !soundOn); soundButton.textContent = soundOn ? "♫" : "×"; soundButton.setAttribute("aria-pressed", String(soundOn)); if (soundOn) { initAudio(); beep(440, .06); } });
+ui.messageButton.addEventListener("click", () => {
+  if (state === "transition") continueLevel();
+  else startGame(selectedStartLevel);
+});
+byId("jumpButton").addEventListener("pointerdown", event => {
+  event.preventDefault();
+  jump();
+});
+ui.duckButton.addEventListener("pointerdown", event => {
+  event.preventDefault();
+  setDucking(true);
+});
+ui.duckButton.addEventListener("pointerup", () => setDucking(false));
+ui.duckButton.addEventListener("pointercancel", () => setDucking(false));
+byId("blastButton").addEventListener("pointerdown", event => {
+  event.preventDefault();
+  blast();
+});
+ui.homeButton.addEventListener("click", goHome);
+ui.soundButton.addEventListener("click", toggleSound);
 window.addEventListener("keydown", e => {
   if (["Space", "ArrowUp", "ArrowDown", "ArrowRight"].includes(e.code)) e.preventDefault();
-  if (e.code === "ArrowDown" && state === "playing" && player.grounded) player.ducking = true;
+  if (e.code === "ArrowDown") setDucking(true);
   if (e.repeat) return;
   if (e.code === "Space" || e.code === "ArrowUp") jump();
   if (e.code === "KeyX" || e.code === "ArrowRight") blast();
   if (e.code === "Enter" && state === "menu") startGame();
 });
-window.addEventListener("keyup", e => {
-  if (e.code === "ArrowDown") player.ducking = false;
+window.addEventListener("keyup", event => {
+  if (event.code === "ArrowDown") setDucking(false);
 });
 
-resetPlayer(); updateHud();
-clouds = Array.from({ length: 5 });
+resetPlayer();
+updateHud();
 requestAnimationFrame(loop);

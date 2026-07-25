@@ -106,6 +106,8 @@ kbd { display: inline-block; min-width: 28px; margin-right: 4px; padding: 4px 7p
 .track.done i { width: 100%; }
 .footer-copy { margin: 19px 0 0; text-align: center; color: #766b90; font-size: 12px; letter-spacing: .4px; }
 .footer-copy span { color: var(--pink); }
+.footer-copy a { color: var(--purple); font-weight: 800; text-underline-offset: 3px; }
+.footer-copy a:hover { color: var(--purple-dark); }
 
 @media (max-width: 700px) {
   .game-shell { padding: 10px 8px 14px; }

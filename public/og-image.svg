@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Egg Blaster game preview">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Egg Runner game preview">
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
       <stop stop-color="#b8f1f4"/>
@@ -26,7 +26,7 @@
   </g>
   <g font-family="Arial Rounded MT Bold, Arial, sans-serif" fill="#261953">
     <text x="72" y="225" font-size="108" font-weight="900" letter-spacing="-5">EGG</text>
-    <text x="72" y="325" font-size="108" font-weight="900" letter-spacing="-5" fill="#6c42d8">BLASTER!</text>
+    <text x="72" y="325" font-size="108" font-weight="900" letter-spacing="-5" fill="#6c42d8">RUNNER!</text>
     <text x="78" y="383" font-size="28" font-weight="700" letter-spacing="2">JUMP · DUCK · STOMP · BLAST</text>
   </g>
   <rect x="76" y="422" width="352" height="71" rx="20" fill="#ffd84d" stroke="#261953" stroke-width="6"/>

@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#29175e" />
-    <meta name="description" content="Jump, duck, stomp, and blast through four wild worlds in Egg Blaster!" />
+    <meta name="description" content="Jump, duck, stomp, and blast through six wild worlds in Egg Runner!" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Egg Blaster!" />
+    <meta property="og:title" content="Egg Runner!" />
     <meta property="og:description" content="Help Captain Eggbert save the coop in a kid-friendly jumping adventure." />
     <meta property="og:url" content="https://egg.tryonlinux.com/" />
     <meta property="og:image" content="https://egg.tryonlinux.com/og-image.svg" />
@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://egg.tryonlinux.com/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>Egg Blaster!</title>
+    <title>Egg Runner!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
@@ -24,9 +24,9 @@
   <body>
     <main class="game-shell">
       <header class="brand-row">
-        <a class="brand" href="#" aria-label="Egg Blaster home">
+        <a class="brand" href="#" aria-label="Egg Runner home">
           <span class="brand-egg" aria-hidden="true">★</span>
-          <span>EGG <b>BLASTER!</b></span>
+          <span>EGG <b>RUNNER!</b></span>
         </a>
         <div class="header-actions">
           <button class="home-button" id="homeButton" type="button" aria-label="Return home">⌂</button>
@@ -34,7 +34,7 @@
         </div>
       </header>
 
-      <section class="game-card" aria-label="Egg Blaster game">
+      <section class="game-card" aria-label="Egg Runner game">
         <div class="hud" aria-live="polite">
           <div class="level-pill"><span id="levelNumber">LEVEL 1</span><b id="levelName">ZOMBIE ZONE</b></div>
           <div class="ammo-block"><span>AMMO</span><b><i>✦</i> <strong id="ammo">0</strong></b></div>
@@ -105,7 +105,10 @@
         </div>
       </section>
 
-      <p class="footer-copy">Made with <span>♥</span> and a little bit of shell power</p>
+      <p class="footer-copy">
+        Made with <span>♥</span> and a little bit of shell power ·
+        <a href="https://github.com/tryonlinux/egg-runner">View on GitHub</a>
+      </p>
     </main>
     <script src="game.js"></script>
   </body>

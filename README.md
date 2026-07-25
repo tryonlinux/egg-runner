@@ -1,4 +1,4 @@
-# Egg Blaster!
+# Egg Runner!
 
 ## Backstory
 
@@ -6,7 +6,7 @@ I was describing my job as a Software Engineer to my 5-year-old the other day an
 
 This is the third game he had me make.
 
-## Egg Blaster
+## Egg Runner
 
 A kid-friendly side-scrolling game where Captain Eggbert jumps, ducks, stomps, and blasts through six wild worlds to save the coop.
 

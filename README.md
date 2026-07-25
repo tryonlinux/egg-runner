@@ -2,7 +2,7 @@
 
 ## Backstory
 
-I was describing my job as a Software Engineer to my 5-year-old the other day and talked about all the things I could code, including games. A couple weeks later he came up to me and wanted me to write him another game. I was like, “Sure, let’s see if AI can help write it.” He gave me the initial requirements, and we tweaked it as he QA’d it or had other suggestions.
+I was describing my job as a Software Engineer to my 5-year-old the other day and talked about all the things I could code, including games. A couple months later he came up to me and wanted me to write him another game. I was like, “Sure, let’s see if AI can help write it.” He gave me the initial requirements, and we tweaked it as he QA’d it or had other suggestions.
 
 This is the third game he had me make.
 

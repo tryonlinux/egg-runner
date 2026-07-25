@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://egg.tryonlinux.com/sitemap.xml

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Captain Eggbert">
+  <rect width="128" height="128" rx="28" fill="#ffd84d"/>
+  <path d="M64 16c-25 0-42 32-42 62 0 25 18 39 42 39s42-14 42-39c0-30-17-62-42-62z" fill="#fffdf2" stroke="#261953" stroke-width="7"/>
+  <path d="M38 31c9-10 39-15 54-2l-4 15c-18-7-34-5-51 2z" fill="#6c42d8" stroke="#261953" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="51" cy="67" rx="5" ry="6" fill="#261953"/>
+  <ellipse cx="76" cy="67" rx="5" ry="6" fill="#261953"/>
+  <path d="M50 82c8 10 20 10 28 0" fill="none" stroke="#261953" stroke-width="6" stroke-linecap="round"/>
+  <path d="M93 76h27v13H93z" fill="#6c42d8" stroke="#261953" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M116 79h10v7h-10z" fill="#ff5b87" stroke="#261953" stroke-width="4"/>
+  <circle cx="101" cy="83" r="4" fill="#ffd84d"/>
+</svg>

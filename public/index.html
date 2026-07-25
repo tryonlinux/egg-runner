@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#29175e" />
+    <meta name="description" content="Jump, duck, stomp, and blast through four wild worlds in Egg Blaster!" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Egg Blaster!" />
+    <meta property="og:description" content="Help Captain Eggbert save the coop in a kid-friendly jumping adventure." />
+    <meta property="og:url" content="https://egg.tryonlinux.com/" />
+    <meta property="og:image" content="https://egg.tryonlinux.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://egg.tryonlinux.com/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Egg Blaster!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="brand-row">
+        <a class="brand" href="#" aria-label="Egg Blaster home">
+          <span class="brand-egg" aria-hidden="true">★</span>
+          <span>EGG <b>BLASTER!</b></span>
+        </a>
+        <div class="header-actions">
+          <button class="home-button" id="homeButton" type="button" aria-label="Return home">⌂</button>
+          <button class="sound-button" id="soundButton" type="button" aria-label="Toggle sound" aria-pressed="true">♫</button>
+        </div>
+      </header>
+
+      <section class="game-card" aria-label="Egg Blaster game">
+        <div class="hud" aria-live="polite">
+          <div class="level-pill"><span id="levelNumber">LEVEL 1</span><b id="levelName">ZOMBIE ZONE</b></div>
+          <div class="ammo-block"><span>AMMO</span><b><i>✦</i> <strong id="ammo">0</strong></b></div>
+          <div class="score-block"><span>SCORE</span><b id="score">00000</b></div>
+          <div class="lives-block"><span>LIVES</span><b id="lives" aria-label="10 lives">♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</b></div>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="gameCanvas" width="960" height="540" aria-label="A running egg game. Jump over or blast the enemies."></canvas>
+
+          <div class="screen" id="startScreen">
+            <div class="hero-egg" aria-hidden="true">
+              <span class="hero-face">•ᴗ•</span><span class="hero-gun">━◈</span>
+            </div>
+            <p class="eyebrow">READY FOR AN EGG-CITING ADVENTURE?</p>
+            <h1>Jump. Blast.<br /><em>Save the Coop!</em></h1>
+            <p class="intro">Help Captain Eggbert zoom through six wild worlds. Hop over baddies or zap them with your trusty ray blaster!</p>
+            <button class="primary-button" id="startButton" type="button">START GAME <span>▶</span></button>
+            <div class="level-select" aria-label="Choose a starting level">
+              <span>QUICK LEVEL SELECT</span>
+              <div>
+                <button type="button" data-start-level="0">1 <small>ZOMBIES</small></button>
+                <button type="button" data-start-level="1">2 <small>NINJAS</small></button>
+                <button type="button" data-start-level="2">3 <small>DRAGONS</small></button>
+                <button type="button" data-start-level="3">4 <small>BISON</small></button>
+                <button type="button" data-start-level="4">5 <small>DINOS</small></button>
+                <button type="button" data-start-level="5">6 <small>STORMS</small></button>
+              </div>
+            </div>
+            <div class="controls-hint">
+              <span><kbd>SPACE</kbd> or <kbd>↑</kbd> Jump</span>
+              <i></i>
+              <span><kbd>↓</kbd> Duck · <kbd>X</kbd> or <kbd>→</kbd> Blast</span>
+            </div>
+          </div>
+
+          <div class="screen compact hidden" id="messageScreen">
+            <div class="death-art hidden" id="deathArt" aria-hidden="true">
+              <span class="yolk yolk-one">•ᴗ•</span>
+              <span class="yolk yolk-two">•ᴗ•</span>
+              <i class="shell-half shell-left"></i><i class="shell-half shell-right"></i>
+            </div>
+            <p class="eyebrow" id="messageEyebrow">SHELL SHOCKED!</p>
+            <h2 id="messageTitle">Nice try!</h2>
+            <p id="messageText">The coop needs its hero.</p>
+            <button class="primary-button" id="messageButton" type="button">TRY AGAIN <span>↻</span></button>
+          </div>
+
+          <div class="mobile-controls" aria-label="Touch controls">
+            <button id="jumpButton" type="button"><span>↑</span> JUMP</button>
+            <button id="duckButton" type="button"><span>↓</span> DUCK</button>
+            <button id="blastButton" type="button"><span>✦</span> BLAST</button>
+          </div>
+        </div>
+
+        <div class="level-tracker" aria-label="Game levels">
+          <div class="level-step active" data-level="0"><span>1</span><p>ZOMBIE<br /><b>ZONE</b></p></div>
+          <div class="track"><i></i></div>
+          <div class="level-step" data-level="1"><span>2</span><p>NINJA<br /><b>NIGHT</b></p></div>
+          <div class="track"><i></i></div>
+          <div class="level-step" data-level="2"><span>3</span><p>DRAGON<br /><b>CASTLE</b></p></div>
+          <div class="track"><i></i></div>
+          <div class="level-step" data-level="3"><span>4</span><p>BISON<br /><b>BLITZ</b></p></div>
+          <div class="track"><i></i></div>
+          <div class="level-step" data-level="4"><span>5</span><p>DINO<br /><b>DANGER</b></p></div>
+          <div class="track"><i></i></div>
+          <div class="level-step" data-level="5"><span>6</span><p>STORM<br /><b>STRIKE</b></p></div>
+        </div>
+      </section>
+
+      <p class="footer-copy">Made with <span>♥</span> and a little bit of shell power</p>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>

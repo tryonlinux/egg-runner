@@ -1,5 +1,5 @@
 {
-  "name": "egg-game",
+  "name": "egg-runner",
   "compatibility_date": "2026-01-18",
   "assets": {
     "directory": "./public"

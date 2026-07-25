@@ -54,7 +54,7 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .canvas-wrap { position: relative; overflow: hidden; background: #ade8f4; aspect-ratio: 16 / 9; }
 canvas { display: block; width: 100%; height: 100%; }
-.screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; text-align: center; color: var(--ink); background: linear-gradient(rgba(217,247,255,.72), rgba(255,251,218,.8)); backdrop-filter: blur(2px); transition: opacity .25s, visibility .25s; }
+.screen { position: absolute; z-index: 2; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; text-align: center; color: var(--ink); background: linear-gradient(rgba(217,247,255,.72), rgba(255,251,218,.8)); backdrop-filter: blur(2px); transition: opacity .25s, visibility .25s; }
 .screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .hero-egg { position: relative; display: grid; place-items: center; width: 73px; height: 88px; margin-bottom: 8px; color: var(--ink); background: #fffdf4; border: 4px solid var(--ink); border-radius: 52% 52% 45% 45%; box-shadow: inset -10px -8px 0 #f2e7cd, 6px 6px 0 rgba(67,33,155,.25); transform: rotate(-5deg); }
 .hero-egg::before { content: ""; position: absolute; top: -9px; left: 20px; width: 28px; height: 17px; background: var(--purple); border: 3px solid var(--ink); border-radius: 50% 50% 4px 4px; transform: rotate(-9deg); }
@@ -89,7 +89,8 @@ kbd { display: inline-block; min-width: 28px; margin-right: 4px; padding: 4px 7p
 .shell-right { right: 0; bottom: 3px; border-radius: 8px 8px 35px 35px; transform: rotate(-15deg); clip-path: polygon(0 5%, 24% 28%, 45% 0, 68% 27%, 84% 5%, 100% 23%, 100% 100%, 0 100%); }
 @keyframes yolkSplat { from { opacity: 0; transform: translateY(-55px) scale(.35) rotate(-8deg); } 70% { opacity: 1; transform: translateY(5px) scale(1.12); } to { transform: none; } }
 
-.mobile-controls { position: absolute; inset: auto 12px 12px; display: none; justify-content: space-between; pointer-events: none; }
+.mobile-controls { display: none; justify-content: space-between; padding: 9px 12px 12px; background: #fffdf5; pointer-events: none; }
+.mobile-controls.hidden { display: none; }
 .mobile-controls button { pointer-events: auto; width: 82px; height: 58px; border: 3px solid var(--ink); border-radius: 15px; color: white; background: rgba(67,33,155,.84); box-shadow: 3px 4px 0 var(--ink); font-size: 12px; font-weight: 900; }
 .mobile-controls span { display: block; font-size: 20px; line-height: 17px; }
 

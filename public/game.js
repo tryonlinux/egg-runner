@@ -16,6 +16,7 @@ const ui = {
   ammo: byId("ammo"),
   soundButton: byId("soundButton"),
   homeButton: byId("homeButton"),
+  mobileControls: document.querySelector(".mobile-controls"),
   duckButton: byId("duckButton")
 };
 const levelSteps = document.querySelectorAll(".level-step");
@@ -100,6 +101,7 @@ function startGame(startLevel = selectedStartLevel) {
   state = "playing";
   ui.startScreen.classList.add("hidden");
   ui.messageScreen.classList.add("hidden");
+  ui.mobileControls.classList.remove("hidden");
 }
 
 function goHome() {
@@ -109,6 +111,7 @@ function goHome() {
   ui.messageScreen.classList.add("hidden");
   ui.deathArt.classList.add("hidden");
   ui.startScreen.classList.remove("hidden");
+  ui.mobileControls.classList.add("hidden");
 }
 
 function jump() {
@@ -229,6 +232,7 @@ function setMessage({ eyebrow, title, text, button, icon, showDeathArt = false }
 
 function endGame(won) {
   state = won ? "won" : "gameover";
+  ui.mobileControls.classList.add("hidden");
   player.dead = !won;
   const paddedScore = String(score).padStart(5, "0");
 
@@ -253,6 +257,7 @@ function nextLevel() {
   if (level >= levels.length - 1) { endGame(true); return; }
   level++;
   state = "transition";
+  ui.mobileControls.classList.add("hidden");
   enemies = [];
   shots = [];
   ammoBoxes = [];
@@ -278,6 +283,7 @@ function continueLevel() {
   resetPlayer();
   state = "playing";
   ui.messageScreen.classList.add("hidden");
+  ui.mobileControls.classList.remove("hidden");
 }
 
 function updateHud() {
